@@ -1,0 +1,110 @@
+﻿<Window x:Class="BirthDaysWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BirthDaysWPF"
+        mc:Ignorable="d"
+        Title="Дни рождения" Icon="/Imagew/cake.png" Height="460" Width="850" Background="Ivory" >
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
+                <Button Content="Именинники" Click="ShowTodaysBirthdays_Click" Width="90" Margin="5" Background="LightCoral" ToolTip="Показать именинников сегодня"/>
+            </StackPanel>
+
+            <TextBlock x:Name="txtNameIs"
+                       Text="Имя"
+                       Width="120"
+                       Margin="40 0 0 0"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBox x:Name="txtName"
+                         Width="120"
+                         Background="LightYellow"/>
+                <DatePicker x:Name="dpBirthDate"
+                            Width="100"
+                            Margin="5,0"/>
+                <ComboBox 
+                    x:Name="cmbCategory" 
+                    Width="80" 
+                    Margin="5,0">
+                    <ComboBoxItem Content="Друзья"/>
+                    <ComboBoxItem Content="Семья"/>
+                    <ComboBoxItem Content="Коллеги"/>
+                </ComboBox>
+                <Button Content="Добавить" 
+                        Click="AddPerson_Click" 
+                        Width="70" 
+                        Margin="5,0"
+                        Background="LightGray"/>
+
+                <TextBox x:Name="txtFilter" 
+                         TextChanged="txtFilter_TextChanged"
+                         Width="100"
+                         Background="LightGoldenrodYellow"
+                         ToolTip="Фильтр по имени"/>
+
+                <Image Source="Images/poisk.jpg" 
+                       Width="23"/>
+                <ComboBox x:Name="cmbFilterCategory" 
+                          SelectionChanged="cmbFilterCategory_SelectionChanged"
+                          Width="80" Margin="10,0,0,0">
+                    <ComboBoxItem Content="Все"/>
+                    <ComboBoxItem Content="Друзья"/>
+                    <ComboBoxItem Content="Семья"/>
+                    <ComboBoxItem Content="Коллеги"/>
+                </ComboBox>
+                <Image Source="Images/filter.png" 
+                       Width="20"/>
+                <ComboBox x:Name="cmbSortBy" 
+                      Width="120"
+                      Margin="5,0"
+                      SelectedIndex="0"
+                      SelectionChanged="cmbSortBy_SelectionChanged">
+                    <ComboBoxItem Content="Без сортировки"/>
+                    <ComboBoxItem Content="По имени (А-Я)"/>
+                    <ComboBoxItem Content="По имени (Я-А)"/>
+                    <ComboBoxItem Content="По дате"/>
+                    <ComboBoxItem Content="По возрасту"/>
+                </ComboBox>
+            </StackPanel>
+            <ListView x:Name="lvPeople" Background="Ivory">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Background" Value="{Binding Background}"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Name}" Width="120"/>
+                        <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding BirthDate, StringFormat=\{0:dd.MM\}}" Width="70"/>
+                        <GridViewColumn Header="Категория" DisplayMemberBinding="{Binding Category}" Width="60"/>
+                        <GridViewColumn Header="Возраст" DisplayMemberBinding="{Binding Age}" Width="50"/>
+                        <GridViewColumn Header="Действие" Width="180">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="Поздравить" 
+                                                Click="CongratulateButton_Click" 
+                                                Tag="{Binding}"
+                                                Background="LightGreen"
+                                                Margin="2"
+                                                Width="80"/>
+                                        <Button Content="Удалить" 
+                                                Click="DeleteButton_Click" 
+                                                Tag="{Binding}"
+                                                Background="LightPink"
+                                                Margin="2"
+                                                Width="80"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+    </Grid>
+</Window>
